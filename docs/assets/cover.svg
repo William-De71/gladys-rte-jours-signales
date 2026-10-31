@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="534" viewBox="0 0 800 534">
+  <!-- Cover of the RTE flagged days integration for Gladys Assistant
+       (illustration, no RTE logo): a winter calendar with its PP days, the
+       two peak periods of the day and a transmission tower. Built into
+       cover.jpg by scripts/build-cover.sh. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eaf2fb"/>
+      <stop offset="1" stop-color="#f7f1ec"/>
+    </linearGradient>
+    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f5d8c"/>
+      <stop offset="1" stop-color="#7fa7cf"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="534" fill="url(#bg)"/>
+
+  <!-- the tower and its lines, on a winter evening -->
+  <g transform="translate(470 40)">
+    <rect x="0" y="7" width="290" height="250" rx="18" fill="#28405a" opacity="0.12"/>
+    <rect width="290" height="250" rx="18" fill="url(#dusk)"/>
+    <circle cx="232" cy="58" r="22" fill="#f4e7b4"/>
+    <g stroke="#e8eef5" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M145 40 L105 240 M145 40 L185 240"/>
+      <path d="M120 165 L170 165 M113 200 L177 200 M128 125 L162 125"/>
+      <path d="M120 165 L162 125 M170 165 L128 125 M113 200 L170 165 M177 200 L120 165"/>
+      <path d="M85 80 L205 80 M95 105 L195 105"/>
+      <path d="M145 40 L85 80 M145 40 L205 80"/>
+    </g>
+    <g stroke="#e8eef5" stroke-width="2" fill="none" opacity="0.8">
+      <path d="M0 110 Q 45 135 85 80"/>
+      <path d="M205 80 Q 250 120 290 100"/>
+      <path d="M0 140 Q 50 160 95 105"/>
+      <path d="M195 105 Q 245 140 290 130"/>
+    </g>
+    <!-- lightning: a stressed grid -->
+    <path d="M40 30 L22 72 L38 72 L28 108 L62 58 L45 58 L56 30 Z" fill="#ffb648"/>
+  </g>
+
+  <!-- the calendar of the season -->
+  <g transform="translate(40 40)">
+    <rect x="0" y="7" width="400" height="360" rx="18" fill="#28405a" opacity="0.12"/>
+    <rect width="400" height="360" rx="18" fill="#ffffff"/>
+    <path d="M0 18 Q0 0 18 0 H382 Q400 0 400 18 V70 H0 Z" fill="#2f5d8c"/>
+    <text x="28" y="47" font-family="Inter, DejaVu Sans, sans-serif" font-size="26" font-weight="700" fill="#ffffff">Décembre</text>
+    <text x="372" y="47" text-anchor="end" font-family="Inter, DejaVu Sans, sans-serif" font-size="20" fill="#cfe0f2">7 / 22 PP</text>
+    <g font-family="Inter, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#8a97a6" text-anchor="middle">
+      <text x="48" y="100">L</text><text x="99" y="100">M</text><text x="150" y="100">M</text>
+      <text x="201" y="100">J</text><text x="252" y="100">V</text><text x="303" y="100">S</text><text x="354" y="100">D</text>
+    </g>
+    <g font-family="Inter, DejaVu Sans, sans-serif" font-size="17" fill="#3d4b5c" text-anchor="middle">
+      <!-- week 1 (1 = Tuesday) -->
+      <rect x="78" y="114" width="42" height="36" rx="9" fill="#e5484d"/>
+      <text x="99" y="138" fill="#ffffff" font-weight="700">1</text>
+      <rect x="129" y="114" width="42" height="36" rx="9" fill="#e5484d"/>
+      <text x="150" y="138" fill="#ffffff" font-weight="700">2</text>
+      <text x="201" y="138">3</text><text x="252" y="138">4</text>
+      <text x="303" y="138" fill="#b3bcc7">5</text><text x="354" y="138" fill="#b3bcc7">6</text>
+      <!-- week 2 -->
+      <text x="48" y="186">7</text><text x="99" y="186">8</text><text x="150" y="186">9</text>
+      <rect x="180" y="162" width="42" height="36" rx="9" fill="#e5484d"/>
+      <text x="201" y="186" fill="#ffffff" font-weight="700">10</text>
+      <text x="252" y="186">11</text>
+      <text x="303" y="186" fill="#b3bcc7">12</text><text x="354" y="186" fill="#b3bcc7">13</text>
+      <!-- week 3 -->
+      <rect x="27" y="210" width="42" height="36" rx="9" fill="#e5484d"/>
+      <text x="48" y="234" fill="#ffffff" font-weight="700">14</text>
+      <rect x="78" y="210" width="42" height="36" rx="9" fill="#e5484d"/>
+      <text x="99" y="234" fill="#ffffff" font-weight="700">15</text>
+      <rect x="129" y="210" width="42" height="36" rx="9" fill="#ffe2b8"/>
+      <text x="150" y="234" fill="#9a5b00" font-weight="700">16</text>
+      <text x="201" y="234">17</text><text x="252" y="234">18</text>
+      <text x="303" y="234" fill="#b3bcc7">19</text><text x="354" y="234" fill="#b3bcc7">20</text>
+      <!-- week 4 -->
+      <text x="48" y="282">21</text><text x="99" y="282">22</text><text x="150" y="282">23</text>
+      <text x="201" y="282">24</text><text x="252" y="282" fill="#b3bcc7">25</text>
+      <text x="303" y="282" fill="#b3bcc7">26</text><text x="354" y="282" fill="#b3bcc7">27</text>
+      <!-- week 5 -->
+      <text x="48" y="330">28</text><text x="99" y="330">29</text><text x="150" y="330">30</text>
+      <text x="201" y="330">31</text>
+    </g>
+  </g>
+
+  <!-- the peak periods of a PP day -->
+  <g transform="translate(40 428)" font-family="Inter, DejaVu Sans, sans-serif">
+    <rect x="0" y="7" width="720" height="72" rx="18" fill="#28405a" opacity="0.12"/>
+    <rect width="720" height="72" rx="16" fill="#ffffff"/>
+    <rect x="24" y="30" width="672" height="14" rx="7" fill="#e6ecf2"/>
+    <!-- 0 h -> 24 h over 672 px: 28 px per hour -->
+    <rect x="220" y="30" width="84" height="14" rx="7" fill="#e5484d"/>
+    <rect x="500" y="30" width="84" height="14" rx="7" fill="#e5484d"/>
+    <g font-size="15" fill="#5b6876" text-anchor="middle">
+      <text x="24" y="24">0 h</text>
+      <text x="220" y="24" fill="#c0262d" font-weight="700">7 h</text>
+      <text x="304" y="24" fill="#c0262d" font-weight="700">10 h</text>
+      <text x="500" y="24" fill="#c0262d" font-weight="700">17 h</text>
+      <text x="584" y="24" fill="#c0262d" font-weight="700">20 h</text>
+      <text x="696" y="24">24 h</text>
+    </g>
+    <circle cx="268" cy="37" r="10" fill="#ffffff" stroke="#2f5d8c" stroke-width="4"/>
+  </g>
+
+  <!-- Gladys + RTE signals: a small bell for the scene triggers -->
+  <g transform="translate(470 310)">
+    <rect x="0" y="7" width="290" height="96" rx="18" fill="#28405a" opacity="0.12"/>
+    <rect width="290" height="96" rx="18" fill="#ffffff"/>
+    <g transform="translate(28 22)" fill="none" stroke="#2f5d8c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M26 8 C10 8 6 22 6 34 L0 44 H52 L46 34 C46 22 42 8 26 8 Z"/>
+      <path d="M20 50 Q26 58 32 50"/>
+    </g>
+    <text x="100" y="44" font-family="Inter, DejaVu Sans, sans-serif" font-size="20" font-weight="700" fill="#3d4b5c">Jour PP demain</text>
+    <text x="100" y="72" font-family="Inter, DejaVu Sans, sans-serif" font-size="17" fill="#5b6876">annoncé à 9 h 30</text>
+  </g>
+</svg>

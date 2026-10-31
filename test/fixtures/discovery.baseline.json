@@ -1,0 +1,276 @@
+{
+  "devices": {
+    "pp": {
+      "external_id": "ext:test:pp:france",
+      "should_poll": false,
+      "features": [
+        {
+          "external_id": "ext:test:pp:france:today",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 3,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        },
+        {
+          "external_id": "ext:test:pp:france:tomorrow",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 3,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        },
+        {
+          "external_id": "ext:test:pp:france:day_after",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 3,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        },
+        {
+          "external_id": "ext:test:pp:france:peak_now",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 3,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        },
+        {
+          "external_id": "ext:test:pp:france:season_count",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 22,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        },
+        {
+          "external_id": "ext:test:pp:france:season_remaining",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 22,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        }
+      ]
+    },
+    "demand_response": {
+      "external_id": "ext:test:demand_response:france",
+      "should_poll": false,
+      "features": [
+        {
+          "external_id": "ext:test:demand_response:france:today",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 3,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        },
+        {
+          "external_id": "ext:test:demand_response:france:tomorrow",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 3,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        },
+        {
+          "external_id": "ext:test:demand_response:france:year_count",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 366,
+          "read_only": true,
+          "has_feedback": false,
+          "supported_options": []
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "client_id",
+        "type": "string"
+      },
+      {
+        "key": "client_secret",
+        "type": "secret"
+      },
+      {
+        "key": "options",
+        "type": "section"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      }
+    ],
+    "config_options": {
+      "language": ["auto", "en", "fr", "de", "es"]
+    },
+    "actions": ["test_connection"],
+    "widgets": [
+      {
+        "key": "pp_days",
+        "settings": []
+      },
+      {
+        "key": "demand_response",
+        "settings": []
+      }
+    ],
+    "widget_actions": ["refresh"],
+    "scene_triggers": [
+      {
+        "key": "pp_day_announced",
+        "fields": [
+          {
+            "key": "when",
+            "options": ["today", "tomorrow", "day_after"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "when",
+            "type": "string"
+          },
+          {
+            "key": "days_ahead",
+            "type": "number"
+          },
+          {
+            "key": "season_count",
+            "type": "number"
+          },
+          {
+            "key": "season_remaining",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "pp_peak_started",
+        "fields": [
+          {
+            "key": "period",
+            "options": ["morning", "evening"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "period",
+            "type": "string"
+          },
+          {
+            "key": "start",
+            "type": "string"
+          },
+          {
+            "key": "end",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "pp_peak_ended",
+        "fields": [
+          {
+            "key": "period",
+            "options": ["morning", "evening"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "period",
+            "type": "string"
+          },
+          {
+            "key": "start",
+            "type": "string"
+          },
+          {
+            "key": "end",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "demand_response_day_announced",
+        "fields": [
+          {
+            "key": "when",
+            "options": ["today", "tomorrow"]
+          },
+          {
+            "key": "kind",
+            "options": ["explicit", "implicit", "explicit_implicit"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "when",
+            "type": "string"
+          },
+          {
+            "key": "days_ahead",
+            "type": "number"
+          },
+          {
+            "key": "kind",
+            "type": "string"
+          },
+          {
+            "key": "explicit",
+            "type": "boolean"
+          },
+          {
+            "key": "implicit",
+            "type": "boolean"
+          },
+          {
+            "key": "year_count",
+            "type": "number"
+          }
+        ]
+      }
+    ],
+    "scene_actions": []
+  }
+}

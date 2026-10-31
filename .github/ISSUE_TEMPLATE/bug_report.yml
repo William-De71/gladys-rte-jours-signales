@@ -1,0 +1,54 @@
+name: Bug report
+description: Something does not work as described in the documentation.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem. Never paste your Consumer Key or Consumer Secret.
+  - type: input
+    id: gladys-version
+    attributes:
+      label: Gladys version
+      description: Settings → System.
+      placeholder: '5.3.0'
+    validations:
+      required: true
+  - type: input
+    id: integration-version
+    attributes:
+      label: Integration version
+      description: Integrations → RTE Jours signalés, or Settings → Supervision.
+      placeholder: '0.1.0'
+    validations:
+      required: true
+  - type: input
+    id: devices
+    attributes:
+      label: RTE APIs
+      description: The APIs your RTE application is subscribed to.
+      placeholder: 'Signal 2.0, Demand Response Signal 2.0'
+  - type: textarea
+    id: test-connection
+    attributes:
+      label: Result of "Test the connection"
+      description: The text shown under the "Test the connection" button of the configuration (the state of each RTE API, today and tomorrow).
+      render: text
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened, and what you expected
+      description: Which day, and what RTE published for it (services-rte.com shows the PP days and the flagged days).
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Logs of the integration (Settings → Supervision). In developer mode, add the environment variable `DEBUG=gladys-integration-sdk` for the SDK debug logs, reproduce, then copy the lines. The logs never contain the Consumer Secret nor the access token.
+      render: text

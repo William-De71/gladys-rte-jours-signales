@@ -1,0 +1,21 @@
+Gladys RTE Jours signalés integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It calls the official APIs of RTE (Réseau de transport d'électricité) on the
+RTE data portal (https://data.rte-france.com), "Signal" 2.0 and "Demand
+Response Signal" 2.0, with the client id and client secret of the user's own
+application, and the user accepts the terms of use of the RTE data portal.
+RTE is a trademark of RTE Réseau de transport d'électricité; this integration
+is not affiliated with nor endorsed by RTE.
+
+Sources
+-------
+The endpoints, parameters, answers and error codes come from the user guides
+of both APIs published by RTE (Signal 2.0, Demand Response Signal 2.0.01).
+The PP day rules (22 days from 1 November to 31 March, working days without
+public holidays, peak periods 7:00-10:00 and 17:00-20:00) come from the
+deliberation 2026-24 of the French energy regulator (CRE) of 27 January 2026.
+The idea of the integration comes from the Home Assistant custom component
+"rte-jours-signales" by hiteule (Apache-2.0); no code was copied from it.

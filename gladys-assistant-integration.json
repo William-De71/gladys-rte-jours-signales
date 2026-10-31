@@ -1,0 +1,706 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "RTE Jours signalés",
+  "description": {
+    "en": "RTE PP days and demand response days of the French grid: today, tomorrow, peak periods.",
+    "fr": "Jours PP et jours signalés effacement de RTE : aujourd’hui, demain, périodes de pointe.",
+    "de": "RTE-PP-Tage und Lastabwurftage des französischen Netzes: heute, morgen, Spitzenzeiten.",
+    "es": "Días PP y días de deslastre de RTE en Francia: hoy, mañana y periodos punta."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-rte-jours-signales:0.1.0",
+  "gladys_version": ">=5.3.0",
+  "categories": ["energy"],
+  "keywords": [
+    "RTE",
+    "jours PP",
+    "PP1 PP2",
+    "mécanisme de capacité",
+    "effacement",
+    "jours signalés",
+    "Tempo",
+    "demand response",
+    "peak days",
+    "EcoWatt"
+  ],
+  "countries": ["FR"],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-rte-jours-signales/main/cover.jpg",
+  "transports": ["cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Your RTE application",
+        "fr": "Votre application RTE",
+        "de": "Deine RTE-Anwendung",
+        "es": "Su aplicación RTE"
+      },
+      "description": {
+        "en": "The integration reads the official RTE APIs, free of charge. 1. Create an account on data.rte-france.com. 2. Open the “Signal” API (PP days) and the “Demand Response Signal” API, and click “Subscribe to API” on each, attaching both to the same new application (Web / Server). 3. In “My applications”, copy the client id and the client secret of that application here.",
+        "fr": "L’intégration lit les API officielles de RTE, gratuites. 1. Créez un compte sur data.rte-france.com. 2. Ouvrez l’API « Signal » (jours PP) et l’API « Demand Response Signal », et cliquez sur « Abonnez-vous à l’API » sur chacune, en les rattachant toutes deux à une même nouvelle application (Web / Serveur). 3. Dans « Mes applications », copiez ici l’ID client et l’ID secret de cette application.",
+        "de": "Die Integration liest die offiziellen, kostenlosen RTE-APIs. 1. Leg ein Konto auf data.rte-france.com an. 2. Öffne die API „Signal“ (PP-Tage) und die API „Demand Response Signal“ und klick bei beiden auf „Subscribe to API“, verknüpft mit derselben neuen Anwendung (Web / Server). 3. Kopier unter „My applications“ die Client-ID und das Client-Secret dieser Anwendung hierher.",
+        "es": "La integración lee las API oficiales de RTE, gratuitas. 1. Cree una cuenta en data.rte-france.com. 2. Abra la API «Signal» (días PP) y la API «Demand Response Signal», y haga clic en «Subscribe to API» en cada una, vinculándolas a una misma aplicación nueva (Web / Server). 3. En «My applications», copie aquí el ID de cliente y el secreto de esa aplicación."
+      },
+      "links": [
+        {
+          "url": "https://data.rte-france.com/catalog/-/api/market/Signal/v2.0",
+          "label": {
+            "en": "“Signal” API (PP days)",
+            "fr": "API « Signal » (jours PP)",
+            "de": "API „Signal“ (PP-Tage)",
+            "es": "API «Signal» (días PP)"
+          }
+        },
+        {
+          "url": "https://data.rte-france.com/catalog/-/api/market/Demand-Response-Signal/v2.0",
+          "label": {
+            "en": "“Demand Response Signal” API",
+            "fr": "API « Demand Response Signal »",
+            "de": "API „Demand Response Signal“",
+            "es": "API «Demand Response Signal»"
+          }
+        }
+      ]
+    },
+    {
+      "key": "client_id",
+      "type": "string",
+      "required": true,
+      "label": {
+        "en": "Client id",
+        "fr": "ID client",
+        "de": "Client-ID",
+        "es": "ID de cliente"
+      },
+      "placeholder": {
+        "en": "1c0b6c9e-…",
+        "fr": "1c0b6c9e-…",
+        "de": "1c0b6c9e-…",
+        "es": "1c0b6c9e-…"
+      }
+    },
+    {
+      "key": "client_secret",
+      "type": "secret",
+      "required": true,
+      "label": {
+        "en": "Client secret",
+        "fr": "ID secret",
+        "de": "Client-Secret",
+        "es": "Secreto de cliente"
+      }
+    },
+    {
+      "key": "options",
+      "type": "section",
+      "label": {
+        "en": "Options",
+        "fr": "Options",
+        "de": "Optionen",
+        "es": "Opciones"
+      },
+      "description": {
+        "en": "Only one of the two APIs is fine: the integration offers the device of each API your application is subscribed to.",
+        "fr": "Une seule des deux API suffit : l’intégration propose l’appareil de chaque API à laquelle votre application est abonnée.",
+        "de": "Eine der beiden APIs genügt: Die Integration bietet das Gerät jeder API an, die deine Anwendung abonniert hat.",
+        "es": "Basta con una de las dos API: la integración ofrece el dispositivo de cada API a la que esté suscrita su aplicación."
+      }
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the device texts",
+        "fr": "Langue des textes des appareils",
+        "de": "Sprache der Gerätetexte",
+        "es": "Idioma de los textos de los dispositivos"
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ],
+      "default": "auto",
+      "description": {
+        "en": "Names of the devices and features, and messages of the button below. Automatic: the language of the dashboard once a widget is shown.",
+        "fr": "Noms des appareils et des fonctionnalités, et messages du bouton ci-dessous. Automatique : la langue du tableau de bord dès qu’un widget est affiché.",
+        "de": "Namen der Geräte und Funktionen sowie Meldungen der Schaltfläche unten. Automatisch: die Sprache des Dashboards, sobald ein Widget angezeigt wird.",
+        "es": "Nombres de los dispositivos y funciones, y mensajes del botón de abajo. Automático: el idioma del panel en cuanto se muestra un widget."
+      }
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "description": {
+        "en": "Reads both RTE APIs now and tells what each one answered, with today and tomorrow.",
+        "fr": "Lit maintenant les deux API RTE et indique ce que chacune a répondu, avec aujourd’hui et demain.",
+        "de": "Fragt jetzt beide RTE-APIs ab und zeigt, was jede geantwortet hat, mit heute und morgen.",
+        "es": "Lee ahora las dos API de RTE e indica lo que respondió cada una, con hoy y mañana."
+      }
+    }
+  ],
+  "widgets": [
+    {
+      "key": "pp_days",
+      "icon": "zap",
+      "label": {
+        "en": "RTE PP days",
+        "fr": "Jours PP RTE",
+        "de": "RTE-PP-Tage",
+        "es": "Días PP de RTE"
+      },
+      "description": {
+        "en": "Today, tomorrow and the day after, the peak periods, the PP days of the season out of 22.",
+        "fr": "Aujourd’hui, demain et après-demain, les périodes de pointe, les jours PP de la saison sur 22.",
+        "de": "Heute, morgen und übermorgen, die Spitzenzeiten, die PP-Tage der Saison von 22.",
+        "es": "Hoy, mañana y pasado mañana, los periodos punta, los días PP de la temporada de 22."
+      },
+      "action_timeout_seconds": 60
+    },
+    {
+      "key": "demand_response",
+      "icon": "calendar",
+      "label": {
+        "en": "RTE flagged days",
+        "fr": "Jours signalés RTE",
+        "de": "RTE-Signaltage",
+        "es": "Días señalados RTE"
+      },
+      "description": {
+        "en": "Demand response days today and tomorrow (explicit, implicit), and the flagged days of the year.",
+        "fr": "Jours signalés effacement aujourd’hui et demain (explicite, implicite), et ceux de l’année.",
+        "de": "Lastabwurftage heute und morgen (explizit, implizit) und die Signaltage des Jahres.",
+        "es": "Días de deslastre hoy y mañana (explícito, implícito) y los días señalados del año."
+      },
+      "action_timeout_seconds": 60
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "pp_day_announced",
+      "label": {
+        "en": "A PP day is announced",
+        "fr": "Un jour PP est annoncé",
+        "de": "Ein PP-Tag wird angekündigt",
+        "es": "Se anuncia un día PP"
+      },
+      "description": {
+        "en": "RTE flags a peak day of the capacity mechanism (announced the day before at 9:30, sometimes two days ahead).",
+        "fr": "RTE signale un jour de pointe du mécanisme de capacité (annoncé la veille à 9 h 30, parfois deux jours avant).",
+        "de": "RTE kündigt einen Spitzentag des Kapazitätsmechanismus an (am Vortag um 9:30 Uhr, manchmal zwei Tage vorher).",
+        "es": "RTE señala un día punta del mecanismo de capacidad (anunciado la víspera a las 9:30, a veces dos días antes)."
+      },
+      "fields": [
+        {
+          "key": "when",
+          "type": "multi_select",
+          "label": {
+            "en": "Day",
+            "fr": "Jour",
+            "de": "Tag",
+            "es": "Día"
+          },
+          "options": [
+            {
+              "value": "today",
+              "label": {
+                "en": "Today",
+                "fr": "Aujourd’hui",
+                "de": "Heute",
+                "es": "Hoy"
+              }
+            },
+            {
+              "value": "tomorrow",
+              "label": {
+                "en": "Tomorrow",
+                "fr": "Demain",
+                "de": "Morgen",
+                "es": "Mañana"
+              }
+            },
+            {
+              "value": "day_after",
+              "label": {
+                "en": "Day after tomorrow",
+                "fr": "Après-demain",
+                "de": "Übermorgen",
+                "es": "Pasado mañana"
+              }
+            }
+          ],
+          "description": {
+            "en": "Empty: any day.",
+            "fr": "Vide : n’importe quel jour.",
+            "de": "Leer: jeder Tag.",
+            "es": "Vacío: cualquier día."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Day (YYYY-MM-DD)",
+            "fr": "Jour (AAAA-MM-JJ)",
+            "de": "Tag (JJJJ-MM-TT)",
+            "es": "Día (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "when",
+          "type": "string",
+          "label": {
+            "en": "Day: today, tomorrow, day_after",
+            "fr": "Jour : today, tomorrow, day_after",
+            "de": "Tag: today, tomorrow, day_after",
+            "es": "Día: today, tomorrow, day_after"
+          }
+        },
+        {
+          "key": "days_ahead",
+          "type": "number",
+          "label": {
+            "en": "Days from today",
+            "fr": "Jours d’ici là",
+            "de": "Tage bis dahin",
+            "es": "Días hasta entonces"
+          }
+        },
+        {
+          "key": "season_count",
+          "type": "number",
+          "label": {
+            "en": "PP days this season",
+            "fr": "Jours PP de la saison",
+            "de": "PP-Tage der Saison",
+            "es": "Días PP de la temporada"
+          }
+        },
+        {
+          "key": "season_remaining",
+          "type": "number",
+          "label": {
+            "en": "PP days left",
+            "fr": "Jours PP restants",
+            "de": "Verbleibende PP-Tage",
+            "es": "Días PP restantes"
+          }
+        }
+      ]
+    },
+    {
+      "key": "pp_peak_started",
+      "label": {
+        "en": "A peak period starts",
+        "fr": "Une période de pointe commence",
+        "de": "Eine Spitzenzeit beginnt",
+        "es": "Empieza un periodo punta"
+      },
+      "description": {
+        "en": "On a PP day, at 7:00 and at 17:00 (French time).",
+        "fr": "Un jour PP, à 7 h et à 17 h (heure française).",
+        "de": "An einem PP-Tag um 7:00 und 17:00 Uhr (französische Zeit).",
+        "es": "Un día PP, a las 7:00 y a las 17:00 (hora francesa)."
+      },
+      "fields": [
+        {
+          "key": "period",
+          "type": "multi_select",
+          "label": {
+            "en": "Period",
+            "fr": "Période",
+            "de": "Zeitraum",
+            "es": "Periodo"
+          },
+          "options": [
+            {
+              "value": "morning",
+              "label": {
+                "en": "Morning (7-10)",
+                "fr": "Matin (7 h-10 h)",
+                "de": "Morgen (7-10)",
+                "es": "Mañana (7-10)"
+              }
+            },
+            {
+              "value": "evening",
+              "label": {
+                "en": "Evening (17-20)",
+                "fr": "Soir (17 h-20 h)",
+                "de": "Abend (17-20)",
+                "es": "Tarde (17-20)"
+              }
+            }
+          ],
+          "description": {
+            "en": "Empty: both.",
+            "fr": "Vide : les deux.",
+            "de": "Leer: beide.",
+            "es": "Vacío: ambos."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Day (YYYY-MM-DD)",
+            "fr": "Jour (AAAA-MM-JJ)",
+            "de": "Tag (JJJJ-MM-TT)",
+            "es": "Día (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "period",
+          "type": "string",
+          "label": {
+            "en": "Period: morning, evening",
+            "fr": "Période : morning, evening",
+            "de": "Zeitraum: morning, evening",
+            "es": "Periodo: morning, evening"
+          }
+        },
+        {
+          "key": "start",
+          "type": "string",
+          "label": {
+            "en": "Start (HH:MM)",
+            "fr": "Début (HH:MM)",
+            "de": "Beginn (HH:MM)",
+            "es": "Inicio (HH:MM)"
+          }
+        },
+        {
+          "key": "end",
+          "type": "string",
+          "label": {
+            "en": "End (HH:MM)",
+            "fr": "Fin (HH:MM)",
+            "de": "Ende (HH:MM)",
+            "es": "Fin (HH:MM)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "pp_peak_ended",
+      "label": {
+        "en": "A peak period ends",
+        "fr": "Une période de pointe se termine",
+        "de": "Eine Spitzenzeit endet",
+        "es": "Termina un periodo punta"
+      },
+      "description": {
+        "en": "On a PP day, at 10:00 and at 20:00 (French time).",
+        "fr": "Un jour PP, à 10 h et à 20 h (heure française).",
+        "de": "An einem PP-Tag um 10:00 und 20:00 Uhr (französische Zeit).",
+        "es": "Un día PP, a las 10:00 y a las 20:00 (hora francesa)."
+      },
+      "fields": [
+        {
+          "key": "period",
+          "type": "multi_select",
+          "label": {
+            "en": "Period",
+            "fr": "Période",
+            "de": "Zeitraum",
+            "es": "Periodo"
+          },
+          "options": [
+            {
+              "value": "morning",
+              "label": {
+                "en": "Morning (7-10)",
+                "fr": "Matin (7 h-10 h)",
+                "de": "Morgen (7-10)",
+                "es": "Mañana (7-10)"
+              }
+            },
+            {
+              "value": "evening",
+              "label": {
+                "en": "Evening (17-20)",
+                "fr": "Soir (17 h-20 h)",
+                "de": "Abend (17-20)",
+                "es": "Tarde (17-20)"
+              }
+            }
+          ],
+          "description": {
+            "en": "Empty: both.",
+            "fr": "Vide : les deux.",
+            "de": "Leer: beide.",
+            "es": "Vacío: ambos."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Day (YYYY-MM-DD)",
+            "fr": "Jour (AAAA-MM-JJ)",
+            "de": "Tag (JJJJ-MM-TT)",
+            "es": "Día (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "period",
+          "type": "string",
+          "label": {
+            "en": "Period: morning, evening",
+            "fr": "Période : morning, evening",
+            "de": "Zeitraum: morning, evening",
+            "es": "Periodo: morning, evening"
+          }
+        },
+        {
+          "key": "start",
+          "type": "string",
+          "label": {
+            "en": "Start (HH:MM)",
+            "fr": "Début (HH:MM)",
+            "de": "Beginn (HH:MM)",
+            "es": "Inicio (HH:MM)"
+          }
+        },
+        {
+          "key": "end",
+          "type": "string",
+          "label": {
+            "en": "End (HH:MM)",
+            "fr": "Fin (HH:MM)",
+            "de": "Ende (HH:MM)",
+            "es": "Fin (HH:MM)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "demand_response_day_announced",
+      "label": {
+        "en": "A demand response day is flagged",
+        "fr": "Un jour signalé effacement est publié",
+        "de": "Ein Lastabwurftag wird signalisiert",
+        "es": "Se señala un día de deslastre"
+      },
+      "description": {
+        "en": "RTE flags a day of the demand response tender (published around 11:00 for the next day).",
+        "fr": "RTE signale un jour de l’appel d’offres effacement (publié vers 11 h pour le lendemain).",
+        "de": "RTE signalisiert einen Tag der Lastabwurf-Ausschreibung (gegen 11 Uhr für den Folgetag).",
+        "es": "RTE señala un día de la licitación de deslastre (publicado hacia las 11:00 para el día siguiente)."
+      },
+      "fields": [
+        {
+          "key": "when",
+          "type": "multi_select",
+          "label": {
+            "en": "Day",
+            "fr": "Jour",
+            "de": "Tag",
+            "es": "Día"
+          },
+          "options": [
+            {
+              "value": "today",
+              "label": {
+                "en": "Today",
+                "fr": "Aujourd’hui",
+                "de": "Heute",
+                "es": "Hoy"
+              }
+            },
+            {
+              "value": "tomorrow",
+              "label": {
+                "en": "Tomorrow",
+                "fr": "Demain",
+                "de": "Morgen",
+                "es": "Mañana"
+              }
+            }
+          ],
+          "description": {
+            "en": "Empty: any day.",
+            "fr": "Vide : n’importe quel jour.",
+            "de": "Leer: jeder Tag.",
+            "es": "Vacío: cualquier día."
+          }
+        },
+        {
+          "key": "kind",
+          "type": "multi_select",
+          "label": {
+            "en": "Kind",
+            "fr": "Type",
+            "de": "Art",
+            "es": "Tipo"
+          },
+          "options": [
+            {
+              "value": "explicit",
+              "label": {
+                "en": "Explicit",
+                "fr": "Explicite",
+                "de": "Explizit",
+                "es": "Explícito"
+              }
+            },
+            {
+              "value": "implicit",
+              "label": {
+                "en": "Implicit",
+                "fr": "Implicite",
+                "de": "Implizit",
+                "es": "Implícito"
+              }
+            },
+            {
+              "value": "explicit_implicit",
+              "label": {
+                "en": "Explicit and implicit",
+                "fr": "Explicite et implicite",
+                "de": "Explizit und implizit",
+                "es": "Explícito e implícito"
+              }
+            }
+          ],
+          "description": {
+            "en": "Empty: any kind.",
+            "fr": "Vide : tous les types.",
+            "de": "Leer: jede Art.",
+            "es": "Vacío: cualquier tipo."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Day (YYYY-MM-DD)",
+            "fr": "Jour (AAAA-MM-JJ)",
+            "de": "Tag (JJJJ-MM-TT)",
+            "es": "Día (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "when",
+          "type": "string",
+          "label": {
+            "en": "Day: today, tomorrow, day_after",
+            "fr": "Jour : today, tomorrow, day_after",
+            "de": "Tag: today, tomorrow, day_after",
+            "es": "Día: today, tomorrow, day_after"
+          }
+        },
+        {
+          "key": "days_ahead",
+          "type": "number",
+          "label": {
+            "en": "Days from today",
+            "fr": "Jours d’ici là",
+            "de": "Tage bis dahin",
+            "es": "Días hasta entonces"
+          }
+        },
+        {
+          "key": "kind",
+          "type": "string",
+          "label": {
+            "en": "Kind: explicit, implicit, explicit_implicit",
+            "fr": "Type : explicit, implicit, explicit_implicit",
+            "de": "Art: explicit, implicit, explicit_implicit",
+            "es": "Tipo: explicit, implicit, explicit_implicit"
+          }
+        },
+        {
+          "key": "explicit",
+          "type": "boolean",
+          "label": {
+            "en": "Explicit demand response",
+            "fr": "Effacement explicite",
+            "de": "Expliziter Lastabwurf",
+            "es": "Deslastre explícito"
+          }
+        },
+        {
+          "key": "implicit",
+          "type": "boolean",
+          "label": {
+            "en": "Implicit demand response",
+            "fr": "Effacement implicite",
+            "de": "Impliziter Lastabwurf",
+            "es": "Deslastre implícito"
+          }
+        },
+        {
+          "key": "year_count",
+          "type": "number",
+          "label": {
+            "en": "Flagged days this year",
+            "fr": "Jours signalés de l’année",
+            "de": "Signaltage dieses Jahres",
+            "es": "Días señalados del año"
+          }
+        }
+      ]
+    }
+  ]
+}
